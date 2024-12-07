@@ -36,14 +36,6 @@
 
 "use strict";
 
-// Preloader
-const preLoader = function () {
-  let preloaderWrapper = document.getElementById("preloader");
-  window.onload = () => {
-    preloaderWrapper.classList.add("loaded");
-  };
-};
-preLoader();
 
 // getSiblings
 var getSiblings = function (elem) {
