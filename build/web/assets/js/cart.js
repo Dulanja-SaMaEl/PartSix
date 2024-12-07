@@ -32,7 +32,7 @@ function loadCartProductView(cartList) {
 
         cart_product_container.appendChild(cart_product_clone);
     });
-    cart_product_container.appendChild(cart_product_checkout_container);
+//    cart_product_container.appendChild(cart_product_checkout_container);
     document.getElementById("cart-total").innerHTML = subtotal;
 }
 
