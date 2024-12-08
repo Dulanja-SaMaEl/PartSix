@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import com.google.gson.Gson;
@@ -130,17 +126,17 @@ public class AddProduct extends HttpServlet {
             int pid = (int) session.save(product);
             session.beginTransaction().commit();
 
-            String applicationPath = getServletContext().getRealPath("");
-            String newApplicationPath = applicationPath.replace("build" + File.separator + "web", "web");
-            
+            String applicatonParth = req.getServletContext().getRealPath("");
+            String newApplicationPath = applicatonParth.replace("build" + File.separator + "web", "web");
             System.out.println(newApplicationPath);
+            System.out.println(applicatonParth);
 
-            File folder = new File(newApplicationPath + File.separator + "product_images" + File.separator + pid);
+            File folder = new File(newApplicationPath + "//product-images//" + pid);
             folder.mkdir();
 
             File file1 = new File(folder, "image1.png");
-            InputStream inputStream = image1.getInputStream();
-            Files.copy(inputStream, file1.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            InputStream inputStream1 = image1.getInputStream();
+            Files.copy(inputStream1, file1.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             File file2 = new File(folder, "image2.png");
             InputStream inputStream2 = image2.getInputStream();
@@ -150,6 +146,27 @@ public class AddProduct extends HttpServlet {
             InputStream inputStream3 = image3.getInputStream();
             Files.copy(inputStream3, file3.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
+            responseJson.addProperty("success", true);
+
+//            String applicationPath = getServletContext().getRealPath("");
+//            String newApplicationPath = applicationPath.replace("build" + File.separator + "web", "web");
+//            
+//            System.out.println(newApplicationPath);
+//
+//            File folder = new File(newApplicationPath + File.separator + "product_images" + File.separator + pid);
+//            folder.mkdir();
+//
+//            File file1 = new File(folder, "image1.png");
+//            InputStream inputStream = image1.getInputStream();
+//            Files.copy(inputStream, file1.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//
+//            File file2 = new File(folder, "image2.png");
+//            InputStream inputStream2 = image2.getInputStream();
+//            Files.copy(inputStream2, file2.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//
+//            File file3 = new File(folder, "image3.png");
+//            InputStream inputStream3 = image3.getInputStream();
+//            Files.copy(inputStream3, file3.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
 
         resp.setContentType("application/json");

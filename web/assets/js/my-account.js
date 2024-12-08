@@ -1,7 +1,3 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
 var modelList;
 async function loadDetailsForAddProduct() {
 
@@ -52,19 +48,30 @@ function updateModels() {
 
 async function addProduct() {
 
-    var formData = new FormData();
-    formData.append("title", document.getElementById("title").value);
-    formData.append("description", document.getElementById("description").value);
-    formData.append("brand", document.getElementById("select-brand").value);
-    formData.append("model", document.getElementById("select-model").value);
-    formData.append("price", document.getElementById("price").value);
-    formData.append("qty", document.getElementById("qty").value);
-    formData.append("condition", document.getElementById("select-condition").value);
-    formData.append("status", document.getElementById("select-status").value);
-    formData.append("image1", document.getElementById("image1").files[0]);
-    formData.append("image2", document.getElementById("image2").files[0]);
-    formData.append("image3", document.getElementById("image3").files[0]);
-    
+    const titleTag = document.getElementById("title");
+    const descriptionTag = document.getElementById("description");
+    const brandTag = document.getElementById("select-brand");
+    const modelTag = document.getElementById("select-model");
+    const priceTag = document.getElementById("price");
+    const qtyTag = document.getElementById("qty");
+    const conditionTag = document.getElementById("select-condition");
+    const statusTag = document.getElementById("select-status");
+    const image1Tag = document.getElementById("image1");
+    const image2Tag = document.getElementById("image2");
+    const image3Tag = document.getElementById("image3");
+
+    const formData = new FormData();
+    formData.append("title", titleTag.value);
+    formData.append("description", descriptionTag.value);
+    formData.append("brand", brandTag.value);
+    formData.append("model", modelTag.value);
+    formData.append("price", priceTag.value);
+    formData.append("qty", qtyTag.value);
+    formData.append("condition", conditionTag.value);
+    formData.append("status", statusTag.value);
+    formData.append("image1", image1Tag.files[0]);
+    formData.append("image2", image2Tag.files[0]);
+    formData.append("image3", image3Tag.files[0]);
 
 
     const response = await fetch("AddProduct", {
@@ -76,7 +83,24 @@ async function addProduct() {
     if (response.ok) {
         const json = await response.json();
         console.log(json);
+        if (json.success) {
+            console.log("New Product Added.");
+            titleTag.value = "";
+            descriptionTag.value = "";
+            brandTag.value = 0;
+            modelTag.value = 0;
+//            modelTag.length = 1;
+            priceTag.value = "";
+            qtyTag.value = "";
+            conditionTag.value = 0;
+            statusTag.value = 0;
+            image1Tag.value = null;
+            image2Tag.value = null;
+            image3Tag.value = null;
+        } else {
+            console.log("Something went wrong.");
+        }
     } else {
-        console.log("Server Error");
+        console.log("Server Error.");
     }
 }

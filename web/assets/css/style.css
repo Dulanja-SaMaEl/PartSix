@@ -4370,10 +4370,7 @@ input[type=number]::-webkit-outer-spin-button {
   opacity: 1;
   visibility: visible;
 }
-.product__card:hover .product__primary--img {
-  opacity: 0;
-  visibility: hidden;
-}
+
 .product__card:hover .swiper__nav--btn {
   opacity: 1;
   visibility: visible;
@@ -4386,10 +4383,7 @@ input[type=number]::-webkit-outer-spin-button {
 .product__card:hover .product__card--action__btn {
   transform: scale(1);
 }
-.product__card:hover .product__card--price {
-  opacity: 0;
-  visibility: hidden;
-}
+
 .product__card:hover .product__card--footer {
   opacity: 1;
   visibility: visible;
