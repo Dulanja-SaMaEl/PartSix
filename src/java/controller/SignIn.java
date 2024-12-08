@@ -90,18 +90,23 @@ public class SignIn extends HttpServlet {
                         if (cartList.isEmpty()) {
                             //DB cart is empty
 
+                            System.out.println("Cart list is empty");
+
                             //add each session product into cart
                             for (Cart_Dto cart_Dto : cart_Dtos) {
                                 Cart cart = new Cart();
                                 cart.setProduct(cart_Dto.getProduct());
                                 cart.setQty(cart_Dto.getQty());
-                                cart.setUser(cart_Dto.getUser());
+                                cart.setUser(user);
 
                                 session.save(cart);
                             }
 
                         } else {
                             //DB cart is not empty
+
+                            System.out.println("Cart list is not empty");
+                            
                             for (Cart_Dto cart_Dto : cart_Dtos) {
 
                                 boolean isFoundInDbCart = false;
@@ -136,10 +141,8 @@ public class SignIn extends HttpServlet {
                     }
                 } else {
                     //not verified
-                    
-                  
-                    
-                    if (user.getVerification().equals(user_Dto.getVerification()) ) {
+
+                    if (user.getVerification().equals(user_Dto.getVerification())) {
                         //user passed
 
                         user.setVerification("verified");
@@ -169,6 +172,8 @@ public class SignIn extends HttpServlet {
 
                                 //add each session product into cart
                                 for (Cart_Dto cart_Dto : cart_Dtos) {
+
+                                    System.out.println("Error Here 1");
                                     Cart cart = new Cart();
                                     cart.setProduct(cart_Dto.getProduct());
                                     cart.setQty(cart_Dto.getQty());
