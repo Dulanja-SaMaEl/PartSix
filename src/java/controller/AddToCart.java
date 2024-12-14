@@ -93,9 +93,11 @@ public class AddToCart extends HttpServlet {
                                 session.save(cart);
                                 session.beginTransaction().commit();
 
+                                responseJson.addProperty("success", true);
                                 responseJson.addProperty("message", "Product Added Successfull");
                             } else {
                                 //Not Enough Stock
+                                responseJson.addProperty("success", true);
                                 responseJson.addProperty("message", "Not Enough Stock");
                             }
 
@@ -104,6 +106,9 @@ public class AddToCart extends HttpServlet {
                             Cart cartItem = (Cart) criteria2.uniqueResult();
 
                             cartItem.setQty(cartItem.getQty() + quantity);
+
+                            responseJson.addProperty("success", true);
+                            responseJson.addProperty("message", "Quantity Updated");
 
                             session.update(cartItem);
                             session.beginTransaction().commit();
@@ -136,11 +141,13 @@ public class AddToCart extends HttpServlet {
 
                                     foundCart_DTO.setQty(foundCart_DTO.getQty() + quantity);
 
-                                    responseJson.addProperty("Message", "Product quantity updated | Session Cart Found");
+                                    responseJson.addProperty("success", true);
+                                    responseJson.addProperty("message", "Product quantity updated | Session Cart Found");
 
                                 } else {
                                     // quantity not available
-                                    responseJson.addProperty("Message", "Quantity Not Available | Session Cart Found");
+                                    responseJson.addProperty("success", true);
+                                    responseJson.addProperty("message", "Quantity Not Available | Session Cart Found");
 
                                 }
 
@@ -154,12 +161,14 @@ public class AddToCart extends HttpServlet {
                                     cart_DTO.setQty(quantity);
                                     sessionCart.add(cart_DTO);
 
-                                    responseJson.addProperty("Message", "Product Added To Session Cart | New Product");
+                                    responseJson.addProperty("success", true);
+
+                                    responseJson.addProperty("message", "Product Added To Session Cart | New Product");
                                     System.out.println(cart_DTO.getProduct().getTitle());
 
                                 } else {
                                     //quantity not available
-                                    responseJson.addProperty("Message", "Quantity Not Available");
+                                    responseJson.addProperty("message", "Quantity Not Available");
 
                                 }
 
@@ -180,12 +189,13 @@ public class AddToCart extends HttpServlet {
 
                                 req.getSession().setAttribute("sessionCart", sessionCart);
 
-                                responseJson.addProperty("Message", "Product Added to session cart | Session Cart Not Found");
+                                responseJson.addProperty("success", true);
+                                responseJson.addProperty("message", "Product Added to session cart | Session Cart Not Found");
                                 System.out.println(cart_DTO.getProduct().getTitle());
 
                             } else {
                                 //not enough stock in session cart
-                                responseJson.addProperty("Message", "Not Enough Stock | Session Cart Not Found");
+                                responseJson.addProperty("message", "Not Enough Stock | Session Cart Not Found");
                             }
                         }
                     }

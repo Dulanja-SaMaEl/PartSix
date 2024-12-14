@@ -1,6 +1,12 @@
+
 var productQty;
 
+
 async function loadSingleProduct() {
+
+    notifier = new AWN({
+        position: "top-right" // Set position to top-right
+    });
 
 
     const parameters = new URLSearchParams(window.location.search);
@@ -23,13 +29,12 @@ async function loadSingleProduct() {
             document.getElementById("product-status").innerHTML = product.productStatus.name;
             document.getElementById("product-brand").innerHTML = product.model.brand.name;
 
-            document.getElementById("image1").src = "product_images/" + product.id + "/image1.png";
-//            document.getElementById("image2").src = "product_images/" + product.id + "/image2.png";
-//            document.getElementById("image3").src = "product_images/" + product.id + "/image3.png";
+            document.getElementById("mainImage").src = "product_images/" + product.id + "/image1.png";
 
-//            document.getElementById("image1_1").src = "product_images/" + product.id + "/image1.png";
-//            document.getElementById("image2_1").src = "product_images/" + product.id + "/image2.png";
-//            document.getElementById("image3_1").src = "product_images/" + product.id + "/image3.png";
+
+            document.getElementById("image1_1").src = "product_images/" + product.id + "/image1.png";
+            document.getElementById("image2_1").src = "product_images/" + product.id + "/image2.png";
+            document.getElementById("image3_1").src = "product_images/" + product.id + "/image3.png";
 
             document.getElementById("add-to-cart").addEventListener("click", (e) => {
                 addToCart(product.id, document.getElementById("pro-qunt").value);
@@ -66,7 +71,7 @@ function changeQuantity(amount, inputId) {
 var rProduct;
 function loadRelatedProducts(arrayList) {
 
-    rProduct= document.getElementById("r-product");
+    rProduct = document.getElementById("r-product");
 
     console.log(arrayList);
 
@@ -88,16 +93,29 @@ function loadRelatedProducts(arrayList) {
 }
 
 async  function addToCart(p_id, pqty) {
-    
+
     console.log(p_id);
-    
+
     const response = await fetch("AddToCart?pid=" + p_id + "&pqty=" + pqty);
     if (response.ok) {
         const json = await response.json();
         console.log(json);
+        if (json.success) {
+            notifier.success(json.message);
+        }
     } else {
-        console.log("Server Error");
+        notifier.alert("Server Error");
     }
 
+}
+
+function changeImage(thumbnail) {
+    const mainImage = document.getElementById('mainImage');
+    mainImage.src = thumbnail.src;
+
+    // Highlight the active thumbnail
+    const thumbnails = document.querySelectorAll('.thumbnail-img');
+    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+    thumbnail.classList.add('active');
 }
 

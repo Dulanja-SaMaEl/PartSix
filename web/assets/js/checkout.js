@@ -16,6 +16,11 @@ payhere.onError = function onError(error) {
     console.log("Error:" + error);
 };
 
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
+
 
 const checkout_container = document.getElementById("checkout-container");
 const checkout_data_row = document.getElementById("checkout-data-row");

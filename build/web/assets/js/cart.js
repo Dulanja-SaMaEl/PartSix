@@ -1,17 +1,22 @@
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
 async function loadCartItems() {
     const response = await fetch("LoadCartItems");
     if (response.ok) {
         const json = await response.json();
-        console.log(json);
         loadCartProductView(json.cartList);
     } else {
-        console.log("Server Error");
+        notifier.alert("Server Error");
     }
 }
 const cart_product = document.getElementById("cart-product");
 const cart_product_checkout_container = document.getElementById("cart-product-checkout-container");
-let subtotal = 0;
+
 function loadCartProductView(cartList) {
+    
+    let subtotal = 0;
 
     const cart_product_container = document.getElementById("cart-product-container");
     cart_product_container.innerHTML = "";
@@ -22,7 +27,7 @@ function loadCartProductView(cartList) {
         cart_product_clone.querySelector("#cart-product-img").src = "product_images/" + cartItem.product.id + "/image1.png";
         cart_product_clone.querySelector("#cart-product-name").innerHTML = cartItem.product.title;
         cart_product_clone.querySelector("#cart-product-price").innerHTML = cartItem.product.price;
-        cart_product_clone.querySelector("#remove-item-from-cart").value = cartItem.id;
+        cart_product_clone.querySelector("#remove-item-from-cart").value = cartItem.product.id;
         let numericPrice = parseFloat(cartItem.product.price);
         cart_product_clone.querySelector("#pro1-qunt").value = cartItem.qty;
         let numericqty = Number(cartItem.qty);
@@ -43,6 +48,8 @@ document.body.addEventListener('click', async function (event) {
 
         const response = await fetch("RemoveItemFromCart?cart_item_id=" + event.target.value);
 
+        console.log("remove");
+
         if (response.ok) {
             const json = await response.json();
             console.log(json);
@@ -50,7 +57,7 @@ document.body.addEventListener('click', async function (event) {
                 loadCartItems();
             }
         } else {
-            console.log("Server Error");
+            notifier.alert("Server Error");
         }
     }
 });

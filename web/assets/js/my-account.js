@@ -1,4 +1,8 @@
 var modelList;
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
 async function loadDetailsForAddProduct() {
 
     const response = await fetch("LoadDetailsForAddProduct");
@@ -15,7 +19,7 @@ async function loadDetailsForAddProduct() {
         loadSelectors("select-condition", productConditionsList, ["id", "name"]);
         loadSelectors("select-status", productStatusesList, ["id", "name"]);
     } else {
-        console.log("Server Error");
+       notifier.alert("Server Error");
     }
 }
 
@@ -84,7 +88,7 @@ async function addProduct() {
         const json = await response.json();
         console.log(json);
         if (json.success) {
-            console.log("New Product Added.");
+            notifier.success("New Product Added.");
             titleTag.value = "";
             descriptionTag.value = "";
             brandTag.value = 0;
@@ -98,9 +102,9 @@ async function addProduct() {
             image2Tag.value = null;
             image3Tag.value = null;
         } else {
-            console.log("Something went wrong.");
+            notifier.warning("Something Went Wrong");
         }
     } else {
-        console.log("Server Error.");
+        notifier.alert("Server Error");
     }
 }

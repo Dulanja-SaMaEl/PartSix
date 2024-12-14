@@ -1,3 +1,7 @@
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
 async function loadDeatailsForSearchProduct() {
 
     const response = await fetch("LoadAdvancedSearch");
@@ -17,7 +21,7 @@ async function loadDeatailsForSearchProduct() {
         loadAvailabilities(StatusesList);
         updateProductView(json);
     } else {
-        console.log("Server Error");
+        notifier.alert("Server Error");
     }
 }
 
@@ -140,7 +144,7 @@ async function  loadProducts(first_result) {
         checkedAvailableIds.length = 0;
         updateProductView(json);
     } else {
-        console.log("Server Error");
+        notifier.alert("Server Error");
     }
 
 }
@@ -169,8 +173,8 @@ function updateProductView(json) {
         product_clone.querySelector("#product-model").innerHTML = product.title;
         product_clone.querySelector("#product-price").innerHTML = product.price;
         product_clone.querySelector("#product-img").src = "product_images/" + product.id + "/image1.png";
-        
-        
+
+
         productContainer.appendChild(product_clone)
     });
 

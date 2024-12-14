@@ -1,7 +1,7 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
 
 async function  loadProducts(first_result) {
 
@@ -23,7 +23,7 @@ async function  loadProducts(first_result) {
             console.log(json);
             updateProductView(json);
         } else {
-            console.log("Server Error");
+            notifier.alert("Server Error");
         }
     }
 

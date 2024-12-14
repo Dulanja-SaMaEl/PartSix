@@ -1,3 +1,7 @@
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
 async function signUp() {
 
     const user_dto = {
@@ -21,14 +25,14 @@ async function signUp() {
 
     if (response.ok) {
         const json = await response.json();
-        console.log(json);
+        
 
         if (json.success) {
             window.location = "index.html";
         } else {
-            document.getElementById("message").innerHTML = json.message;
+             notifier.warning(json.message);
         }
     } else {
-        document.getElementById("message").innerHTML = "Please try agin later";
+         notifier.alert("Server Error");
     }
 }

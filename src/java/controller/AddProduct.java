@@ -131,7 +131,7 @@ public class AddProduct extends HttpServlet {
             System.out.println(newApplicationPath);
             System.out.println(applicatonParth);
 
-            File folder = new File(newApplicationPath + "//product-images//" + pid);
+            File folder = new File(applicatonParth + "//product_images//" + pid);
             folder.mkdir();
 
             File file1 = new File(folder, "image1.png");
