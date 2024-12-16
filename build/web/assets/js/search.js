@@ -1,6 +1,6 @@
 var modelList;
 async function loadDetailsForAddProduct() {
-    
+
     searchProducts(0);
 
     const response = await fetch("LoadDetailsForAddProduct");
@@ -63,13 +63,17 @@ async function searchProducts(firstResult) {
     let condition = conditionSelect.options[conditionSelect.selectedIndex].text;
 
     let searchText = document.getElementById('searchText').value;
+    let priceValue1 = document.getElementById('price-value1').value;
+    let priceValue2 = document.getElementById('price-value2').value;
 
     const data = {
         firstResult: firstResult,
         brand: brand,
         model: model,
         condition: condition,
-        searchText: searchText
+        searchText: searchText,
+        priceValue1: priceValue1,
+        priceValue2: priceValue2
     };
 
     const response = await fetch("SearchProducts", {
@@ -108,7 +112,7 @@ function updateProductView(json) {
         st_product_clone.querySelector("#st-product-a-1").href = "product-details.html?pid=" + product.id;
         st_product_clone.querySelector("#st-product-img-1").src = "product-images/" + product.id + "/image1.png";
         st_product_clone.querySelector("#st-product-title-1").innerHTML = product.title;
-        st_product_clone.querySelector("#st-product-price-1").innerHTML ="Rs. " + new Intl.NumberFormat(
+        st_product_clone.querySelector("#st-product-price-1").innerHTML = "Rs. " + new Intl.NumberFormat(
                 "en-US",
                 {
                     minimumFractionDigits: 2

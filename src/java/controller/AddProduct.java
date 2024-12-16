@@ -29,10 +29,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-/**
- *
- * @author dulan
- */
 @MultipartConfig
 @WebServlet(name = "AddProduct", urlPatterns = {"/AddProduct"})
 public class AddProduct extends HttpServlet {
@@ -43,14 +39,15 @@ public class AddProduct extends HttpServlet {
         JsonObject responseJson = new JsonObject();
         responseJson.addProperty("success", false);
 
-        String title = req.getParameter("title");
-        String description = req.getParameter("description");
         String brand = req.getParameter("brand");
         String model = req.getParameter("model");
-        String price = req.getParameter("price");
-        String qty = req.getParameter("qty");
         String condition = req.getParameter("condition");
         String status = req.getParameter("status");
+
+        String title = req.getParameter("title");
+        String description = req.getParameter("description");
+        String price = req.getParameter("price");
+        String qty = req.getParameter("qty");
 
         Part image1 = req.getPart("image1");
         Part image2 = req.getPart("image2");
@@ -67,8 +64,12 @@ public class AddProduct extends HttpServlet {
         } else if (!Validations.isInteger(condition)) {
             responseJson.addProperty("message", "Invalid Condition");
 
+        } else if (!Validations.isInteger(status)) {
+            responseJson.addProperty("message", "Invalid Status");
+
         } else if (title.isEmpty()) {
             responseJson.addProperty("message", "Please Fill Title");
+
         } else if (description.isEmpty()) {
             responseJson.addProperty("message", "Please Fill Description");
 
@@ -83,9 +84,6 @@ public class AddProduct extends HttpServlet {
 
         } else if (qty.isEmpty()) {
             responseJson.addProperty("message", "Please Fill Quantity");
-
-        } else if (status.isEmpty()) {
-            responseJson.addProperty("message", "Please Fill Status");
 
         } else if (!Validations.isInteger(qty)) {
             responseJson.addProperty("message", "Invalid Quantity");
@@ -131,7 +129,7 @@ public class AddProduct extends HttpServlet {
             System.out.println(newApplicationPath);
             System.out.println(applicatonParth);
 
-            File folder = new File(newApplicationPath + "//product-images//" + pid);
+            File folder = new File(applicatonParth + "//product-images//" + pid);
             folder.mkdir();
 
             File file1 = new File(folder, "image1.png");

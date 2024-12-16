@@ -39,8 +39,7 @@ public class SearchProducts extends HttpServlet {
         //search all products
         Criteria criteria1 = session.createCriteria(Product.class);
 
-        //add category filter
-        //category selected
+        //brand selected
         String brandName = requestJsonObject.get("brand").getAsString();
 
         if (!brandName.equals("Sort by Brand")) {
@@ -50,7 +49,7 @@ public class SearchProducts extends HttpServlet {
             criteria2.add(Restrictions.eq("name", brandName));
             List<Brand> brandList = criteria2.list();
 
-            //get models by category from DB
+            //get brand by category from DB
             Criteria criteria3 = session.createCriteria(Model.class);
             criteria3.add(Restrictions.in("brand", brandList));
             List<Model> modelList = criteria3.list();
@@ -59,7 +58,7 @@ public class SearchProducts extends HttpServlet {
             criteria1.add(Restrictions.in("model", modelList));
         }
 
-        //brand selected
+        //model selected
         String modelName = requestJsonObject.get("model").getAsString();
 
         if (!modelName.equals("Sort by Model")) {
@@ -74,7 +73,7 @@ public class SearchProducts extends HttpServlet {
 
         }
 
-        //color selected
+        //condition condition
         String conditionName = requestJsonObject.get("condition").getAsString();
 
         if (!conditionName.equals("Sort by Condition")) {
@@ -97,6 +96,15 @@ public class SearchProducts extends HttpServlet {
             criteria1.add(Restrictions.like("title", searchText, MatchMode.ANYWHERE));
         }
 
+        // Price range selected
+        Double priceValue1 = requestJsonObject.get("priceValue1").getAsDouble();
+        Double priceValue2 = requestJsonObject.get("priceValue2").getAsDouble();
+
+        if (priceValue1 != 0 && priceValue2 != 5000 && priceValue1 < priceValue2) {
+            // Filter products by price range
+            criteria1.add(Restrictions.between("price", priceValue1, priceValue2));
+        }
+
         //get all product count
         responseJsonObject.addProperty("allProductCount", criteria1.list().size());
 
@@ -110,7 +118,7 @@ public class SearchProducts extends HttpServlet {
         System.out.println(productList.size());
 
         //get product list
-        for (Product product : productList) { 
+        for (Product product : productList) {
             product.setUser(null);
         }
 
