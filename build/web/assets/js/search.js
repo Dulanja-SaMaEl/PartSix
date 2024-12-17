@@ -1,10 +1,6 @@
 var modelList;
-// Initialize Awesome Notifications
-const notifier = new AWN({
-    position: "top-right" // Set position to top-right
-});
 async function loadDetailsForAddProduct() {
-    
+
     searchProducts(0);
 
     const response = await fetch("LoadDetailsForAddProduct");
@@ -21,7 +17,7 @@ async function loadDetailsForAddProduct() {
         loadSelectors("select-condition", productConditionsList, ["id", "name"]);
 
     } else {
-        notifier.alert("Server Error");
+        console.log("Server Error");
     }
 }
 
@@ -67,13 +63,17 @@ async function searchProducts(firstResult) {
     let condition = conditionSelect.options[conditionSelect.selectedIndex].text;
 
     let searchText = document.getElementById('searchText').value;
+    let priceValue1 = document.getElementById('price-value1').value;
+    let priceValue2 = document.getElementById('price-value2').value;
 
     const data = {
         firstResult: firstResult,
         brand: brand,
         model: model,
         condition: condition,
-        searchText: searchText
+        searchText: searchText,
+        priceValue1: priceValue1,
+        priceValue2: priceValue2
     };
 
     const response = await fetch("SearchProducts", {
@@ -110,9 +110,9 @@ function updateProductView(json) {
 
         //update cards
         st_product_clone.querySelector("#st-product-a-1").href = "product-details.html?pid=" + product.id;
-        st_product_clone.querySelector("#st-product-img-1").src = "product_images/" + product.id + "/image1.png";
+        st_product_clone.querySelector("#st-product-img-1").src = "product-images/" + product.id + "/image1.png";
         st_product_clone.querySelector("#st-product-title-1").innerHTML = product.title;
-        st_product_clone.querySelector("#st-product-price-1").innerHTML ="Rs. " + new Intl.NumberFormat(
+        st_product_clone.querySelector("#st-product-price-1").innerHTML = "Rs. " + new Intl.NumberFormat(
                 "en-US",
                 {
                     minimumFractionDigits: 2
