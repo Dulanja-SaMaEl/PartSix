@@ -1,4 +1,8 @@
 var modelList;
+// Initialize Awesome Notifications
+const notifier = new AWN({
+    position: "top-right" // Set position to top-right
+});
 async function loadDetailsForAddProduct() {
     
     searchProducts(0);
@@ -17,7 +21,7 @@ async function loadDetailsForAddProduct() {
         loadSelectors("select-condition", productConditionsList, ["id", "name"]);
 
     } else {
-        console.log("Server Error");
+        notifier.alert("Server Error");
     }
 }
 
@@ -106,7 +110,7 @@ function updateProductView(json) {
 
         //update cards
         st_product_clone.querySelector("#st-product-a-1").href = "product-details.html?pid=" + product.id;
-        st_product_clone.querySelector("#st-product-img-1").src = "product-images/" + product.id + "/image1.png";
+        st_product_clone.querySelector("#st-product-img-1").src = "product_images/" + product.id + "/image1.png";
         st_product_clone.querySelector("#st-product-title-1").innerHTML = product.title;
         st_product_clone.querySelector("#st-product-price-1").innerHTML ="Rs. " + new Intl.NumberFormat(
                 "en-US",
